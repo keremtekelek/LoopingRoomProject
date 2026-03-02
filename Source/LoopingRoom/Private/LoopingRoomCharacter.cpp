@@ -19,7 +19,7 @@ ALoopingRoomCharacter::ALoopingRoomCharacter()
 	GetCapsuleComponent()->InitCapsuleSize(42.f, 96.0f);
 		
 	bUseControllerRotationPitch = false;
-	bUseControllerRotationYaw = false;
+	bUseControllerRotationYaw = true;
 	bUseControllerRotationRoll = false;
 
 	GetCharacterMovement()->bOrientRotationToMovement = true; 	
@@ -28,24 +28,29 @@ ALoopingRoomCharacter::ALoopingRoomCharacter()
 	
 	GetCharacterMovement()->JumpZVelocity = 700.f;
 	GetCharacterMovement()->AirControl = 0.35f;
-	GetCharacterMovement()->MaxWalkSpeed = 500.f;
+	GetCharacterMovement()->MaxWalkSpeed = 200.f;
 	GetCharacterMovement()->MinAnalogWalkSpeed = 20.f;
 	GetCharacterMovement()->BrakingDecelerationWalking = 2000.f;
 	GetCharacterMovement()->BrakingDecelerationFalling = 1500.0f;
 
-	CameraBoom = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"));
-	CameraBoom->SetupAttachment(RootComponent);
-	CameraBoom->TargetArmLength = 400.0f; 
-	CameraBoom->bUsePawnControlRotation = true; 
+	
 
 	FollowCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("FollowCamera"));
-	FollowCamera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName); 
-	FollowCamera->bUsePawnControlRotation = false; 
+	FollowCamera->SetupAttachment(GetMesh()); 
+	FollowCamera->bUsePawnControlRotation = true;
 }
 
 void ALoopingRoomCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+}
+
+void ALoopingRoomCharacter::PostInitializeComponents()
+{
+	Super::PostInitializeComponents();
+
+	FollowCamera->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale, TEXT("head"));
+	FollowCamera->SetRelativeLocation(FVector(0, 12, 0));
 }
 
 
@@ -72,6 +77,13 @@ void ALoopingRoomCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInp
 
 		// Looking
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &ALoopingRoomCharacter::Look);
+		
+		// Sprint Action
+		EnhancedInputComponent->BindAction(SprintAction, ETriggerEvent::Triggered, this, &ALoopingRoomCharacter::SprintStart);
+		EnhancedInputComponent->BindAction(SprintAction, ETriggerEvent::Completed, this, &ALoopingRoomCharacter::SprintEnd);
+
+		// Interact Action
+		EnhancedInputComponent->BindAction(InteractAction, ETriggerEvent::Started, this, &ALoopingRoomCharacter::Interact);
 	}
 	else
 	{
@@ -106,4 +118,22 @@ void ALoopingRoomCharacter::Look(const FInputActionValue& Value)
 		AddControllerYawInput(LookAxisVector.X);
 		AddControllerPitchInput(LookAxisVector.Y);
 	}
+}
+
+void ALoopingRoomCharacter::SprintStart(const FInputActionValue& Value)
+{
+	GetCharacterMovement()->MaxWalkSpeed = 420.f;
+	IsCharacterSprinting = true;
+}
+
+void ALoopingRoomCharacter::SprintEnd(const FInputActionValue& Value)
+{
+	GetCharacterMovement()->MaxWalkSpeed = 200.f;
+	IsCharacterSprinting = false;
+}
+
+void ALoopingRoomCharacter::Interact(const FInputActionValue& Value)
+{
+	//
+	UE_LOG(LogTemp, Warning, TEXT("Interaction Happened!"))
 }
