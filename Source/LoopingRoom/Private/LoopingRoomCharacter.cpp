@@ -135,5 +135,5 @@ void ALoopingRoomCharacter::SprintEnd(const FInputActionValue& Value)
 void ALoopingRoomCharacter::Interact(const FInputActionValue& Value)
 {
 	//
-	UE_LOG(LogTemp, Warning, TEXT("Interaction Happened!"))
+	UE_LOG(LogTemp, Warning, TEXT("Interaction Button Pressed!"))
 }
