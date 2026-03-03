@@ -11,6 +11,8 @@ class UInputMappingContext;
 class UInputAction;
 struct FInputActionValue;
 
+class UAC_InteractorComponent;
+
 DECLARE_LOG_CATEGORY_EXTERN(LogTemplateCharacter, Log, All);
 
 UCLASS(config=Game)
@@ -43,6 +45,12 @@ class ALoopingRoomCharacter : public ACharacter
 	UPROPERTY()
 	bool IsCharacterSprinting = false;
 
+	UPROPERTY()
+	bool hasInteractorComponent = false;
+
+	UPROPERTY()
+	UAC_InteractorComponent* InteractorComponent;
+
 public:
 	ALoopingRoomCharacter();
 	
@@ -65,8 +73,9 @@ protected:
 	virtual void PostInitializeComponents() override;
 public:
 	
-	
-	
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
+
+	UFUNCTION()
+	void GettingVariables();
 };
 

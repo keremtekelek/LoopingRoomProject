@@ -9,6 +9,7 @@
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "InputActionValue.h"
+#include "ActorComponenets/AC_InteractorComponent.h"
 
 DEFINE_LOG_CATEGORY(LogTemplateCharacter);
 
@@ -43,6 +44,8 @@ ALoopingRoomCharacter::ALoopingRoomCharacter()
 void ALoopingRoomCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+
+	GettingVariables();
 }
 
 void ALoopingRoomCharacter::PostInitializeComponents()
@@ -53,6 +56,16 @@ void ALoopingRoomCharacter::PostInitializeComponents()
 	FollowCamera->SetRelativeLocation(FVector(0, 12, 0));
 }
 
+void ALoopingRoomCharacter::GettingVariables()
+{
+	UAC_InteractorComponent* Component = this->GetComponentByClass<UAC_InteractorComponent>();
+
+	if (Component)
+	{
+		InteractorComponent = Component;
+		hasInteractorComponent = true;
+	}
+}
 
 
 void ALoopingRoomCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -134,6 +147,9 @@ void ALoopingRoomCharacter::SprintEnd(const FInputActionValue& Value)
 
 void ALoopingRoomCharacter::Interact(const FInputActionValue& Value)
 {
-	//
+	if (hasInteractorComponent)
+	{
+		InteractorComponent->TryInteract();
+	}
 	UE_LOG(LogTemp, Warning, TEXT("Interaction Button Pressed!"))
 }
