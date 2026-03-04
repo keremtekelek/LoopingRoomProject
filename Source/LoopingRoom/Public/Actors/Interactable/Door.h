@@ -1,6 +1,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Actors/Base/InteractableActorBase.h"
 #include "GameFramework/Actor.h"
 #include "Components/StaticMeshComponent.h"
 #include "Components/TimelineComponent.h"
@@ -17,7 +18,7 @@
 class UAC_InteractableComponent;
 
 UCLASS()
-class LOOPINGROOM_API ADoor : public AActor
+class LOOPINGROOM_API ADoor : public AInteractableActorBase
 {
 	GENERATED_BODY()
 	
