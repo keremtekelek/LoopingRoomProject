@@ -1,22 +1,16 @@
 #include "Actors/Interactable/Door.h"
-#include "ActorComponenets/AC_InteractableComponent.h"
+
 
 
 ADoor::ADoor()
 {
 	PrimaryActorTick.bCanEverTick = true;
 
-	DefaultSceneRoot = CreateDefaultSubobject<USceneComponent>(TEXT("Default Scene Root"));
-	RootComponent = DefaultSceneRoot;
-
 	DoorMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Door Mesh"));
 	DoorMesh->SetupAttachment(RootComponent);
 
 	DoorFrame = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Door Frame"));
 	DoorFrame->SetupAttachment(RootComponent);
-
-	InteractableComponent = CreateDefaultSubobject<UAC_InteractableComponent>(TEXT("InteractableComponent"));
-
 }
 
 
@@ -38,11 +32,6 @@ void ADoor::BeginPlay()
 	FinishedFunction.BindUFunction(this, FName("HandleFinished"));
 	DoorTimeline.SetTimelineFinishedFunc(FinishedFunction);
 
-	if (InteractableComponent)
-	{
-		InteractableComponent->OnInteract.AddDynamic(this, &ADoor::OnInteractionTriggered);
-	}
-	
 }
 
 
@@ -52,7 +41,6 @@ void ADoor::Tick(float DeltaTime)
 
 	DoorTimeline.TickTimeline(DeltaTime);
 	DotProductResult = CalculateDotProduct();
-
 }
 
 
@@ -139,6 +127,8 @@ void ADoor::HandleFinished()
 
 void ADoor::OnInteractionTriggered()
 {
+	Super::OnInteractionTriggered();
+	
 	OpenTheDoor();
 }
 

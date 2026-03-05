@@ -15,7 +15,7 @@
 #include "Door.generated.h"
 
 
-class UAC_InteractableComponent;
+
 
 UCLASS()
 class LOOPINGROOM_API ADoor : public AInteractableActorBase
@@ -29,19 +29,19 @@ public:
 protected:
 	
 	virtual void BeginPlay() override;
+	virtual void OnInteractionTriggered() override;
+	virtual void Tick(float DeltaTime) override;
 
 public:	
 	
-	virtual void Tick(float DeltaTime) override;
+	
 
 	//For variables
 public:
 
 	UPROPERTY(VisibleAnywhere)
 	ACharacter* PlayerCharacter;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
-	UAC_InteractableComponent* InteractableComponent;
+	
 	
 	UPROPERTY(VisibleAnywhere)
 	bool CanInteract = false;
@@ -81,10 +81,7 @@ public:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
 	UStaticMeshComponent* DoorFrame;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
-	USceneComponent* DefaultSceneRoot;
-
+	
 	UPROPERTY()
 	FTimeline DoorTimeline;
 
@@ -106,7 +103,6 @@ public:
 	UFUNCTION()
 	void HandleFinished();
 
-	UFUNCTION()
-	void OnInteractionTriggered();
+	
 
 };
