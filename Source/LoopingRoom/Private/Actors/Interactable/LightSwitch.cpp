@@ -6,6 +6,9 @@ ALightSwitch::ALightSwitch()
 
 	LightSwitchMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Light Switch Mesh"));
 	LightSwitchMesh->SetupAttachment(RootComponent);
+
+	SwitchMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Switch Mesh"));
+	SwitchMesh->SetupAttachment(LightSwitchMesh);
 }
 
 void ALightSwitch::BeginPlay()
