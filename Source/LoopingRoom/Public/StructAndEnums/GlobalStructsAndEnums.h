@@ -15,11 +15,8 @@ struct FActor_State
     UPROPERTY(EditAnywhere, BlueprintReadWrite)
     bool IsActorVisible;
     
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	FVector ActorLocation;
-	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	FRotator ActorRotation;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	FTransform TransformData;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TArray<FVector> SpawnableLocations;
@@ -38,12 +35,9 @@ struct FRoom_State
  
     UPROPERTY(EditAnywhere, BlueprintReadWrite)
     bool IsRoomVisible;
-    
-    UPROPERTY(EditAnywhere, BlueprintReadWrite)
-    FVector RoomLocation;
-    
-    UPROPERTY(EditAnywhere, BlueprintReadWrite)
-    FRotator RoomRotation;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	FTransform TransformData;
     
     UPROPERTY(EditAnywhere, BlueprintReadWrite)
     TMap<FGameplayTag, FActor_State> RoomActors;

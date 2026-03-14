@@ -14,9 +14,9 @@ APlaceholder::APlaceholder()
 	}
 	if (PossibleActor != nullptr)
 	{
-		
-		Location = this->GetActorLocation();
-		Rotation = this->GetActorRotation();
+		PlaceholderData.SetLocation(RootComponent->GetRelativeTransform().GetLocation());
+		PlaceholderData.SetRotation(RootComponent->GetRelativeTransform().GetRotation());
+		PlaceholderData.SetScale3D(RootComponent->GetRelativeTransform().GetScale3D());
 	}
 
 }

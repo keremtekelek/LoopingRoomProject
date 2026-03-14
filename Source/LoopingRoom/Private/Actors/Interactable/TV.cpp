@@ -6,6 +6,9 @@ ATV::ATV()
 
 	TVMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("TV Mesh"));
 	TVMesh->SetupAttachment(RootComponent);
+
+	TV_TableMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("TV Table Mesh"));
+	TV_TableMesh->SetupAttachment(TVMesh);
 }
 
 void ATV::BeginPlay()

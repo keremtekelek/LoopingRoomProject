@@ -25,6 +25,7 @@ public:
 	// VARIABLES!
 public:
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	FActor_State ActorData; 
 
 

@@ -23,17 +23,14 @@ protected:
 	// VARIABLES
 public:
 
-	UPROPERTY()
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	UChildActorComponent* ChildActor;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	AActor* PossibleActor;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	FVector Location;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	FRotator Rotation;
+	FTransform PlaceholderData;
 	
 	
 	//FUNCTIONS!

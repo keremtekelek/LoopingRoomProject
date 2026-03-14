@@ -18,15 +18,20 @@ public:
 protected:
 	
 	virtual void BeginPlay() override;
-
-public:	
-	
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
+	//VARIABLES
+public:	
+	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite,Category = "Interaction")
 	float InteractionDistance = 250.0f;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Debug")
+	bool EnableDebug{false};
+
+	//FUNCTIONS
 	
+public:
 	UFUNCTION(BlueprintCallable, Category = "Interaction")
 	void TryInteract();
 };

@@ -1,6 +1,7 @@
 #include "ActorComponenets/AC_InteractorComponent.h"
 #include "ActorComponenets/AC_InteractableComponent.h"
 
+//#define ENABLE_DEBUG
 
 UAC_InteractorComponent::UAC_InteractorComponent()
 {
@@ -44,7 +45,7 @@ void UAC_InteractorComponent::TryInteract()
 	QueryParams.AddIgnoredActor(Owner); 
 
 	
-	bool bHit = GetWorld()->LineTraceSingleByChannel(
+	bool Hit = GetWorld()->LineTraceSingleByChannel(
 		HitResult,
 		EyeLocation,
 		EndLocation,
@@ -53,24 +54,32 @@ void UAC_InteractorComponent::TryInteract()
 	);
 
 	
-	DrawDebugLine(GetWorld(), EyeLocation, EndLocation, bHit ? FColor::Green : FColor::Red, false, 2.0f, 0, 1.0f);
+	DrawDebugLine(GetWorld(), EyeLocation, EndLocation, Hit ? FColor::Green : FColor::Red, false, 2.0f, 0, 1.0f);
 
-	if (bHit && HitResult.GetActor())
+	if (Hit && HitResult.GetActor())
 	{
 		AActor* HitActor = HitResult.GetActor();
+
+		#ifdef ENABLE_DEBUG
+			UE_LOG(LogTemp, Warning, TEXT("Line Trace Hit Actor: %s"), *HitActor->GetName());
+		#endif
 		
-		UE_LOG(LogTemp, Warning, TEXT("Line Trace Hit Actor: %s"), *HitActor->GetName());
 		
 		UAC_InteractableComponent* InteractableComponent = HitActor->GetComponentByClass<UAC_InteractableComponent>();
 		
 		if (InteractableComponent)
 		{
 			InteractableComponent->TriggerInteraction();
-			UE_LOG(LogTemp, Warning, TEXT("Interactable Component found at Interactable Actor!"))
+
+			#ifdef ENABLE_DEBUG
+				UE_LOG(LogTemp, Warning, TEXT("Interactable Component found at Interactable Actor!"))
+			#endif
 		}
 		else
 		{
-			UE_LOG(LogTemp, Warning, TEXT("Interactable Component DIDN'T found at Interactable Actor!"))
+			#ifdef ENABLE_DEBUG
+				UE_LOG(LogTemp, Warning, TEXT("Interactable Component DIDN'T found at Interactable Actor!"))
+			#endif
 		}
 	}
 }

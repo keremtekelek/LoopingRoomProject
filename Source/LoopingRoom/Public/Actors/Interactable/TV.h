@@ -25,6 +25,9 @@ public:
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
 	UStaticMeshComponent* TVMesh;
+	
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
+	UStaticMeshComponent* TV_TableMesh;
 
 	//FUNCTIONS
 public:

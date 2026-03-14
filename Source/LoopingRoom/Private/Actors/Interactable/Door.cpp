@@ -6,11 +6,11 @@ ADoor::ADoor()
 {
 	PrimaryActorTick.bCanEverTick = true;
 
-	DoorMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Door Mesh"));
-	DoorMesh->SetupAttachment(RootComponent);
-
 	DoorFrame = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Door Frame"));
 	DoorFrame->SetupAttachment(RootComponent);
+
+	DoorMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Door Mesh"));
+	DoorMesh->SetupAttachment(DoorFrame);
 }
 
 
